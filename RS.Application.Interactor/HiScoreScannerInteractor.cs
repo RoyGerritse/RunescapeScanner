@@ -1,6 +1,7 @@
 ﻿using Scanner.Infrastructure.Database;
 using Scanner.Infrastructure.Database.Interface;
 using Scanner.Infrastructure.HiScoreClient;
+using Scanner.Infrastructure.HiScoreClient.Interface;
 
 namespace Scanner.Application.Interactor;
 

@@ -46,6 +46,12 @@ public class WebCrawler : IWebCrawler
                 {
                     Id = default,
                     Name = name,
+                    AccountType = AccountType.Unknown,
+                    Version = new GameVersion
+                    {
+                        Id = default,
+                        Name = "1"
+                    },
                 },
                 Total = total,
                 Xp = xp

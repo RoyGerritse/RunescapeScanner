@@ -1,4 +1,5 @@
 ﻿using Scanner.Domain.Entities;
+using Scanner.Infrastructure.HiScoreClient.Interface;
 using Scanner.Infrastructure.HiScoreClient.Models;
 using static System.String;
 
