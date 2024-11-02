@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Scanner.Application.Interactor</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\RS.Infrastructure.Database\RS.Infrastructure.Database.csproj" />
+      <ProjectReference Include="..\RS.Infrastructure.HiScoreClient\RS.Infrastructure.HiScoreClient.csproj" />
+      <ProjectReference Include="..\RS.Infrastructure.WebCrawler\RS.Infrastructure.WebCrawler.csproj" />
+    </ItemGroup>
+
+</Project>
