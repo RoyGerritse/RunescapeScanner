@@ -4,7 +4,7 @@ while (true)
 {
     try
     {
-        await new NameScannerInteractor().Execute();
+        await new PlayerNameScannerInteractor().Execute();
     }
     catch (Exception ex)
     {
