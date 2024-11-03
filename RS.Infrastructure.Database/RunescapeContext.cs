@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Scanner.Application.Interactor;
 using Scanner.Domain.Entities;
 using Scanner.Infrastructure.Database.Interface;
 
@@ -15,7 +16,7 @@ public class RunescapeContext : DbContext, IRunescapeContext
     public DbSet<Skill> Skill => Set<Skill>();
     public DbSet<SkillStat> SkillStat => Set<SkillStat>();
     public DbSet<SkillStatHistory> SkillStatHistory => Set<SkillStatHistory>();
-    
+
     public DbSet<LogRecord> LogRecord => Set<LogRecord>();
     public DbSet<User> User => Set<User>();
 
@@ -35,16 +36,16 @@ public class RunescapeContext : DbContext, IRunescapeContext
             .HasOne<GameVersion>(a => a.GameVersion)
             .WithMany(a => a.Players)
             .HasForeignKey(a => a.GameVersionId);
-    
+
         modelBuilder.Entity<GameVersion>()
             .HasData(new GameVersion
             {
                 Id = new Guid("8d292ae5-87c6-44f6-a7a7-71898af17f52"),
-                Name = "OSRS"
+                Name = RunescapeVersion.Oldschool
             }, new GameVersion
             {
                 Id = new Guid("83cce0f7-3d54-437c-b4c1-3f270792fc8c"),
-                Name = "RS3"
+                Name = RunescapeVersion.Regular
             });
         base.OnModelCreating(modelBuilder);
     }

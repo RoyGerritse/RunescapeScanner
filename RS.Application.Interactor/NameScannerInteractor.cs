@@ -41,9 +41,8 @@ public class NameScannerInteractor
                         Page = crawl.Page,
                         User = user
                     });
-                    Console.WriteLine("Page: {0} Rank: {1} Total: {2} XP: {3} Name: {4}", crawl.Page,
-                        crawl.Rank,
-                        crawl.Total, crawl.Xp, crawl.UserName);
+                    Console.WriteLine("Page: {0,-5} Rank: {1,-6} Total: {2,-4} XP: {3,-6} Name: {4,-12}", 
+                        crawl.Page, crawl.Rank, crawl.Total, crawl.Xp, crawl.UserName);
                 }
                 await _db.SaveChangesAsync(CancellationToken.None);
 

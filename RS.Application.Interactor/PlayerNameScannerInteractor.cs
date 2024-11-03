@@ -9,8 +9,7 @@ namespace Scanner.Application.Interactor;
 public class PlayerNameScannerInteractor
 {
     private const string SessionName = "PlayerNameScanner";
-    private const string Regular = "RS7";
-    
+
     private readonly IWebCrawler _hiScoreCrawler = new WebCrawler();
     private readonly IRunescapeContext _db = new RunescapeContext();
 
@@ -26,17 +25,23 @@ public class PlayerNameScannerInteractor
                 var list = await _hiScoreCrawler.Ranking(page, "0", "0");
                 foreach (var crawl in list.OrderBy(a => a.Rank))
                 {
-                    var player = _db.Player.SingleOrDefault(a => a.Name == crawl.UserName) ?? new Player
+                    var player = _db.Player.SingleOrDefault(a => a.Name == crawl.UserName);
+                    var exist = true;
+                    if (player == null)
                     {
-                        Id = Guid.NewGuid(),
-                        Name = crawl.UserName,
-                        AccountType = AccountType.Unknown,
-                        GameVersion = gameVersion
-                    };
-                    _db.Player.Add(player);
-                    Console.WriteLine("Page: {0} Rank: {1} Total: {2} XP: {3} Name: {4}", crawl.Page,
-                        crawl.Rank,
-                        crawl.Total, crawl.Xp, crawl.UserName);
+                        player = new Player
+                        {
+                            Id = Guid.NewGuid(),
+                            Name = crawl.UserName,
+                            AccountType = AccountType.Unknown,
+                            GameVersion = gameVersion
+                        };
+                        _db.Player.Add(player);
+                        exist = false;
+                    }
+
+                    Console.WriteLine("Exist: {0,4} Page: {1,5} Rank: {2,6} Total: {3,4} XP: {4,6} Name: {5,12}",
+                        exist, crawl.Page, crawl.Rank, crawl.Total, crawl.Xp, crawl.UserName);
                 }
 
                 session.Setting["Page"] = page.ToString();
@@ -49,12 +54,12 @@ public class PlayerNameScannerInteractor
 
     private async Task<GameVersion> GetOrCreateGameVersion()
     {
-        var gameVersion = _db.GameVersion.SingleOrDefault(a => a.Name == Regular);
+        var gameVersion = _db.GameVersion.SingleOrDefault(a => a.Name == RunescapeVersion.Regular);
         if (gameVersion != null) return gameVersion;
         gameVersion = new GameVersion
         {
             Id = Guid.NewGuid(),
-            Name = Regular
+            Name = RunescapeVersion.Regular
         };
         _db.GameVersion.Add(gameVersion);
         await _db.SaveChangesAsync(CancellationToken.None);
@@ -73,7 +78,7 @@ public class PlayerNameScannerInteractor
             Setting = new Dictionary<string, string>
             {
                 { "Page", "0" }
-            },
+            }
         };
         _db.CurrentSession.Add(session);
         await _db.SaveChangesAsync(CancellationToken.None);
