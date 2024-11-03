@@ -6,9 +6,9 @@ using Scanner.Infrastructure.WebCrawler.Interface;
 
 namespace Scanner.Application.Interactor;
 
-public class RegularPlayerNamesInteractor
+public class OldschoolPlayerNamesInteractor
 {
-    private const string SessionName = "RegularPlayerNames";
+    private const string SessionName = "OldschoolPlayerNames";
 
     private readonly IWebCrawler _hiScoreCrawler = new WebCrawler();
     private readonly IRunescapeContext _db = new RunescapeContext();
@@ -22,7 +22,7 @@ public class RegularPlayerNamesInteractor
             var current = int.Parse(session.Setting["Page"]);
             for (var page = current + 1; page <= 80000; page++)
             {
-                var list = await _hiScoreCrawler.RegularRanking(page, "0", "0");
+                var list = await _hiScoreCrawler.OldschoolRanking(page, "0");
                 var crawlModels = list.ToList();
                 if (page > 100 && crawlModels.First().Rank < 100)
                 {
@@ -32,6 +32,7 @@ public class RegularPlayerNamesInteractor
                 }
                 foreach (var crawl in crawlModels.OrderBy(a => a.Rank))
                 {
+                    
                     var player = _db.Player.SingleOrDefault(a => a.Name == crawl.UserName && a.GameVersionId == gameVersion.Id);
                     var exist = true;
                     if (player == null)
@@ -63,7 +64,7 @@ public class RegularPlayerNamesInteractor
 
     private async Task<GameVersion> GetOrCreateGameVersion()
     {
-        var gameVersion = _db.GameVersion.SingleOrDefault(a => a.Name == RunescapeVersion.Regular);
+        var gameVersion = _db.GameVersion.SingleOrDefault(a => a.Name == RunescapeVersion.Oldschool);
         if (gameVersion != null) return gameVersion;
         gameVersion = new GameVersion
         {

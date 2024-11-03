@@ -5,7 +5,7 @@ while (running)
 {
     try
     {
-        running = await new RegularPlayerNamesInteractor().Execute();
+        running = await new OldschoolPlayerNamesInteractor().Execute();
     }
     catch (Exception ex)
     {
