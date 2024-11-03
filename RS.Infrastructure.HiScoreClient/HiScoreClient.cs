@@ -9,11 +9,11 @@ public class HiScoreClient : IHiScoreClient
 {
     private const string HiScoreIndexLiteUrl = "https://secure.runescape.com/m=hiscore/index_lite.ws?player={0}";
 
-    public async Task<StatOverview> IndexLite(User user)
+    public async Task<StatOverview> IndexLite(Player player)
     {
         var client = new HttpClient();
-        var content = await client.GetStringAsync(Format(HiScoreIndexLiteUrl, user.Name));
-        var stat = new StatOverview(user,content);
+        var content = await client.GetStringAsync(Format(HiScoreIndexLiteUrl, player.Name));
+        var stat = new StatOverview(player,content);
         return stat;
     }
 }

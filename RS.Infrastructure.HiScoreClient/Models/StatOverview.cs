@@ -6,9 +6,9 @@ public class StatOverview
 {
     private readonly Dictionary<int, IStat> _statsDictionary = new();
 
-    public StatOverview(User user, string content)
+    public StatOverview(Player player, string content)
     {
-        User = user;
+        Player = player;
         var lines = content.Split('\n');
         foreach (var line in lines.Select((value, i) => new { i, value }))
         {
@@ -26,7 +26,7 @@ public class StatOverview
     }
 
     private IList<IStat> Stats => _statsDictionary.Select(a => a.Value).ToList();
-    public User User { get; set; }
+    public Player Player { get; set; }
     public SkillStat Overall => (SkillStat)Stats[0];
     public SkillStat Attack => (SkillStat)Stats[1];
     public SkillStat Defence => (SkillStat)Stats[2];

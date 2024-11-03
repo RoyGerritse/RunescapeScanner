@@ -12,10 +12,10 @@ public class HiScoreScannerInteractor
 
     public async Task Execute()
     {
-        foreach (var user in _db.User)
+        foreach (var user in _db.Player)
         {
             var stats = await _hiScoreClient.IndexLite(user);
-            Console.WriteLine("User {0} Rank {1}", stats.User.Name, stats.Overall.Rank);
+            Console.WriteLine("User {0} Rank {1}", stats.Player.Name, stats.Overall.Rank);
         }
     }
 }

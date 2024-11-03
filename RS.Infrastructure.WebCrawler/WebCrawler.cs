@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using Scanner.Domain.Entities;
 using Scanner.Infrastructure.WebCrawler.Interface;
+using Scanner.Infrastructure.WebCrawler.Model;
 using static System.String;
 
 namespace Scanner.Infrastructure.WebCrawler;
@@ -10,9 +11,9 @@ public class WebCrawler : IWebCrawler
     private const string HiScoreCrawlerUrl = "https://secure.runescape.com/m=hiscore/ranking?category_type={0}&table={1}&page={2}";
     private readonly HtmlWeb _web = new();
 
-    public async Task<IEnumerable<LogRecord>> Ranking(int page, string type, string table)
+    public async Task<IEnumerable<CrawlModel>> Ranking(int page, string type, string table)
     {
-        var list = new List<LogRecord>();
+        var list = new List<CrawlModel>();
         var document = await _web.LoadFromWebAsync(Format(HiScoreCrawlerUrl, type, table, page));
         if (document == null)
         {
@@ -36,27 +37,16 @@ public class WebCrawler : IWebCrawler
                 .Replace(",", Empty);
             var xp = long.Parse(element.SelectSingleNode("td[4]/a").InnerText.Replace("\n", Empty)
                 .Replace(",", Empty));
-            var user = new LogRecord
+            var crawl = new CrawlModel
             {
-                Id = Guid.NewGuid(),
                 ChangeDate = DateTime.UtcNow,
                 Page = page,
                 Rank = rank,
-                User = new User
-                {
-                    Id = default,
-                    Name = name,
-                    AccountType = AccountType.Unknown,
-                    Version = new GameVersion
-                    {
-                        Id = default,
-                        Name = "1"
-                    },
-                },
+                UserName = name,
                 Total = total,
                 Xp = xp
             };
-            list.Add(user);
+            list.Add(crawl);
         }
 
         return list;

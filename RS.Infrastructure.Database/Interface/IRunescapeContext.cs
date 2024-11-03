@@ -8,9 +8,17 @@ namespace Scanner.Infrastructure.Database.Interface;
 
 public interface IRunescapeContext
 {
-    DbSet<User> User { get; }
+    DbSet<Activity> Activity { get; }
+    DbSet<ActivityStat> ActivityStat { get; }
+    DbSet<ActivityStatHistory> ActivityStatHistory { get; }
+    DbSet<CurrentSession> CurrentSession { get; }
+    DbSet<GameVersion> GameVersion { get; }
+    DbSet<Player> Player { get; }
+    DbSet<Skill> Skill { get; }
+    DbSet<SkillStat> SkillStat { get; }
+    DbSet<SkillStatHistory> SkillStatHistory { get; }
     DbSet<LogRecord> LogRecord { get; }
-
+    DbSet<User> User { get; }
     DatabaseFacade Database { get; }
     ChangeTracker ChangeTracker { get; }
     IModel Model { get; }

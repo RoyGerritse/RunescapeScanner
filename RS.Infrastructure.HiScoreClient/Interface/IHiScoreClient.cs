@@ -5,5 +5,5 @@ namespace Scanner.Infrastructure.HiScoreClient.Interface;
 
 public interface IHiScoreClient
 {
-    Task<StatOverview> IndexLite(User user);
+    Task<StatOverview> IndexLite(Player player);
 }

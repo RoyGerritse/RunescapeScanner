@@ -6,7 +6,7 @@ using Scanner.Infrastructure.WebCrawler.Interface;
 
 namespace Scanner.Application.Interactor;
 
-public class NameScannerInteractor
+public class PlayerNameScannerInteractor
 {
     private readonly IWebCrawler _hiScoreCrawler = new WebCrawler();
     private readonly IRunescapeContext _db = new RunescapeContext();
