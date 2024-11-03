@@ -69,7 +69,7 @@ public class OldschoolPlayerNamesInteractor
         gameVersion = new GameVersion
         {
             Id = Guid.NewGuid(),
-            Name = RunescapeVersion.Regular
+            Name = RunescapeVersion.Oldschool
         };
         _db.GameVersion.Add(gameVersion);
         await _db.SaveChangesAsync(CancellationToken.None);

@@ -74,7 +74,7 @@ public class WebCrawler : IWebCrawler
         {
             var rank = int.Parse(element.SelectSingleNode("td[1]").InnerText.Replace("\n", Empty)
                 .Replace(",", Empty));
-            var name = element.SelectSingleNode("td[2]/a").InnerText.Replace("\n", Empty);
+            var name = element.SelectSingleNode("td[2]/a").InnerText.Replace("\n", Empty).Replace("\u00a0", " ");
             var total = element.SelectSingleNode("td[3]").InnerText.Replace("\n", Empty)
                 .Replace(",", Empty);
             var xp = long.Parse(element.SelectSingleNode("td[4]").InnerText.Replace("\n", Empty)
