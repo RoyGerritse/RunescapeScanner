@@ -17,8 +17,6 @@ public interface IRunescapeContext
     DbSet<Skill> Skill { get; }
     DbSet<SkillStat> SkillStat { get; }
     DbSet<SkillStatHistory> SkillStatHistory { get; }
-    DbSet<LogRecord> LogRecord { get; }
-    DbSet<User> User { get; }
     DatabaseFacade Database { get; }
     ChangeTracker ChangeTracker { get; }
     IModel Model { get; }

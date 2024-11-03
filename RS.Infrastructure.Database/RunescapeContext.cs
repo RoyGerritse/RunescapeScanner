@@ -17,9 +17,6 @@ public class RunescapeContext : DbContext, IRunescapeContext
     public DbSet<SkillStat> SkillStat => Set<SkillStat>();
     public DbSet<SkillStatHistory> SkillStatHistory => Set<SkillStatHistory>();
 
-    public DbSet<LogRecord> LogRecord => Set<LogRecord>();
-    public DbSet<User> User => Set<User>();
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Activity>().HasKey(a => a.Id);
@@ -31,7 +28,6 @@ public class RunescapeContext : DbContext, IRunescapeContext
         modelBuilder.Entity<Skill>().HasKey(a => a.Id);
         modelBuilder.Entity<SkillStat>().HasKey(a => a.Id);
         modelBuilder.Entity<ActivityStat>().HasKey(a => a.Id);
-        modelBuilder.Entity<LogRecord>().HasKey(a => a.Id);
         modelBuilder.Entity<Player>()
             .HasOne<GameVersion>(a => a.GameVersion)
             .WithMany(a => a.Players)
