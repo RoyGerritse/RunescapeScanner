@@ -1,4 +1,6 @@
-﻿namespace Scanner.Infrastructure.HiScoreClient.Models;
+﻿using Scanner.Infrastructure.HiScoreClient.Interface;
+
+namespace Scanner.Infrastructure.HiScoreClient.Models;
 
 public class SkillStat : IStat
 {
