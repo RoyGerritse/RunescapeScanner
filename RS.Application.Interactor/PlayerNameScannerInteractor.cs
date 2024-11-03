@@ -13,7 +13,7 @@ public class PlayerNameScannerInteractor
     private readonly IWebCrawler _hiScoreCrawler = new WebCrawler();
     private readonly IRunescapeContext _db = new RunescapeContext();
 
-    public async Task Execute()
+    public async Task<bool> Execute()
     {
         await using (_db)
         {
@@ -23,8 +23,16 @@ public class PlayerNameScannerInteractor
             for (var page = current + 1; page <= 80000; page++)
             {
                 var list = await _hiScoreCrawler.Ranking(page, "0", "0");
-                foreach (var crawl in list.OrderBy(a => a.Rank))
+                var crawlModels = list.ToList();
+                if (page > 100 && crawlModels.First().Rank < 100)
                 {
+                    session.Active = false;
+                    _db.CurrentSession.Update(session);
+                    break;
+                }
+                foreach (var crawl in crawlModels.OrderBy(a => a.Rank))
+                {
+                    
                     var player = _db.Player.SingleOrDefault(a => a.Name == crawl.UserName);
                     var exist = true;
                     if (player == null)
@@ -47,9 +55,11 @@ public class PlayerNameScannerInteractor
                 session.Setting["Page"] = page.ToString();
                 _db.CurrentSession.Update(session);
                 await _db.SaveChangesAsync(CancellationToken.None);
-                Thread.Sleep(5005);
+                Thread.Sleep(6155);
             }
         }
+
+        return false;
     }
 
     private async Task<GameVersion> GetOrCreateGameVersion()

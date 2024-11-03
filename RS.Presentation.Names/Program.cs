@@ -1,10 +1,11 @@
 ﻿using Scanner.Application.Interactor;
 
-while (true)
+var running = true;
+while (running)
 {
     try
     {
-        await new PlayerNameScannerInteractor().Execute();
+        running = await new PlayerNameScannerInteractor().Execute();
     }
     catch (Exception ex)
     {
