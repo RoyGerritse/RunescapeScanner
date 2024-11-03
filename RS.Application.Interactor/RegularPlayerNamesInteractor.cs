@@ -22,7 +22,7 @@ public class RegularPlayerNamesInteractor
             var current = int.Parse(session.Setting["Page"]);
             for (var page = current + 1; page <= 80000; page++)
             {
-                var list = await _hiScoreCrawler.Ranking(page, "0", "0");
+                var list = await _hiScoreCrawler.RegularRanking(page, "0", "0");
                 var crawlModels = list.ToList();
                 if (page > 100 && crawlModels.First().Rank < 100)
                 {

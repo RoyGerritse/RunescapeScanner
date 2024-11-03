@@ -11,7 +11,7 @@ public class WebCrawler : IWebCrawler
     private const string HiScoreCrawlerUrl = "https://secure.runescape.com/m=hiscore/ranking?category_type={0}&table={1}&page={2}";
     private readonly HtmlWeb _web = new();
 
-    public async Task<IEnumerable<CrawlModel>> Ranking(int page, string type, string table)
+    public async Task<IEnumerable<CrawlModel>> RegularRanking(int page, string type, string table)
     {
         var list = new List<CrawlModel>();
         var document = await _web.LoadFromWebAsync(Format(HiScoreCrawlerUrl, type, table, page));

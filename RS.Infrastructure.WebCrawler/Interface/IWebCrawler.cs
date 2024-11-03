@@ -5,5 +5,5 @@ namespace Scanner.Infrastructure.WebCrawler.Interface;
 
 public interface IWebCrawler
 {
-    Task<IEnumerable<CrawlModel>> Ranking(int page, string type, string table);
+    Task<IEnumerable<CrawlModel>> RegularRanking(int page, string type, string table);
 }
