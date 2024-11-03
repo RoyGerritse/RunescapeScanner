@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RS.Presentation.Names", "RS.Presentation.Names\RS.Presentation.Names.csproj", "{CE3BB1AF-AF9A-4D64-AFC2-98D95FF36C2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RS.Presentation.RegularNames", "RS.Presentation.RegularNames\RS.Presentation.RegularNames.csproj", "{CE3BB1AF-AF9A-4D64-AFC2-98D95FF36C2A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RS.Infrastructure.Database", "RS.Infrastructure.Database\RS.Infrastructure.Database.csproj", "{A7879AB1-6D7E-4694-B910-66063CCE98FE}"
 EndProject
@@ -20,7 +20,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RS.Infrastructure.WebCrawle
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RS.Infrastructure.HiScoreClient", "RS.Infrastructure.HiScoreClient\RS.Infrastructure.HiScoreClient.csproj", "{F50E048F-848A-41B1-95EF-B3674834CDE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RS.Presentation.Stats", "RS.Presentation.Stats\RS.Presentation.Stats.csproj", "{A8EFFE85-BCFB-4F9D-BF8A-F841F1A9B6A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RS.Presentation.RegularStats", "RS.Presentation.RegularStats\RS.Presentation.RegularStats.csproj", "{A8EFFE85-BCFB-4F9D-BF8A-F841F1A9B6A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RS.Presentation.OldschoolNames", "RS.Presentation.OldschoolNames\RS.Presentation.OldschoolNames.csproj", "{DA08319F-86B5-4B7C-B100-42A94D6A0E71}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 		{A8EFFE85-BCFB-4F9D-BF8A-F841F1A9B6A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8EFFE85-BCFB-4F9D-BF8A-F841F1A9B6A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8EFFE85-BCFB-4F9D-BF8A-F841F1A9B6A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA08319F-86B5-4B7C-B100-42A94D6A0E71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA08319F-86B5-4B7C-B100-42A94D6A0E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA08319F-86B5-4B7C-B100-42A94D6A0E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA08319F-86B5-4B7C-B100-42A94D6A0E71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F2021FBF-296F-4EF1-9F4F-F107FFAC5709} = {736E1BC9-3D22-4995-8C59-3E31946B8F08}
@@ -65,5 +71,6 @@ Global
 		{01D7AB43-A271-4FAB-A9B9-6DC6BC8A847F} = {73CB0B9B-E46C-438F-BED0-9F72FC5D6819}
 		{F50E048F-848A-41B1-95EF-B3674834CDE3} = {73CB0B9B-E46C-438F-BED0-9F72FC5D6819}
 		{A8EFFE85-BCFB-4F9D-BF8A-F841F1A9B6A6} = {398E3C00-2172-46A6-BC17-495EB685AE7F}
+		{DA08319F-86B5-4B7C-B100-42A94D6A0E71} = {398E3C00-2172-46A6-BC17-495EB685AE7F}
 	EndGlobalSection
 EndGlobal

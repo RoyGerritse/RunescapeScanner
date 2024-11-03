@@ -1,10 +1,11 @@
 ﻿using Scanner.Application.Interactor;
 
-while (true)
+var running = true;
+while (running)
 {
     try
     {
-        await new HiScoreScannerInteractor().Execute();
+        running = await new RegularPlayerNamesInteractor().Execute();
     }
     catch (Exception ex)
     {

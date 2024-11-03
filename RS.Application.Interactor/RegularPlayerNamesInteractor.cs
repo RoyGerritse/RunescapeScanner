@@ -6,9 +6,9 @@ using Scanner.Infrastructure.WebCrawler.Interface;
 
 namespace Scanner.Application.Interactor;
 
-public class PlayerNameScannerInteractor
+public class RegularPlayerNamesInteractor
 {
-    private const string SessionName = "PlayerNameScanner";
+    private const string SessionName = "RegularPlayerNames";
 
     private readonly IWebCrawler _hiScoreCrawler = new WebCrawler();
     private readonly IRunescapeContext _db = new RunescapeContext();
