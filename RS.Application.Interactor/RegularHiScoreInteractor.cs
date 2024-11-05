@@ -27,9 +27,9 @@ public class RegularHiScoreInteractor
         var users = _db.Player
             .Where(a => a.GameVersionId == _gameVersion.Id)
             .ToList();
-        if (session.Setting.TryGetValue("User", out var currentName))
+        if (session.Setting.TryGetValue("Name", out var currentName))
         {
-            users = users.SkipWhile(a => a.Name != currentName).ToList();
+            users = users.SkipWhile(a => a.Name == currentName).ToList();
         }
 
         foreach (var user in users)
