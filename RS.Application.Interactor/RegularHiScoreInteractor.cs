@@ -26,20 +26,33 @@ public class RegularHiScoreInteractor
         var session = await GetOrCreateSession();
         var users = _db.Player
             .Where(a => a.GameVersionId == _gameVersion.Id)
+            .OrderBy(a => a.Name)
             .ToList();
         if (session.Setting.TryGetValue("Name", out var currentName))
         {
-            users = users.SkipWhile(a => a.Name == currentName).ToList();
+            var item = users.SingleOrDefault(a => a.Name == currentName);
+            if (item != null)
+            {
+                var index = users.IndexOf(item);
+                users.RemoveRange(0, index);
+            }
         }
 
-        foreach (var user in users)
+        var count = users.Count;
+        foreach (var user in users.Select((value, i) => new { i, value }))
         {
-            var statOverview = await _hiScoreClient.IndexLite(user);
-            Console.WriteLine("User {0} Rank {1}", statOverview.Player.Name, statOverview.Overall.Rank);
-            var currentSkills = _db.SkillStat.Where(a => a.PlayerId == user.Id && a.GameVersionId == _gameVersion.Id)
+            var statOverview = await _hiScoreClient.IndexLite(user.value);
+            if (statOverview == null)
+            {
+                Console.WriteLine("{0,7}/{1} - User: {2,12} - Not active", user.i, count, user.value.Name);
+                continue;
+            }
+
+            var currentSkills = _db.SkillStat
+                .Where(a => a.PlayerId == user.value.Id && a.GameVersionId == _gameVersion.Id)
                 .ToList();
             var currentActivities = _db.ActivityStat
-                .Where(a => a.PlayerId == user.Id && a.GameVersionId == _gameVersion.Id)
+                .Where(a => a.PlayerId == user.value.Id && a.GameVersionId == _gameVersion.Id)
                 .ToList();
             foreach (var stat in statOverview.Stats)
             {
@@ -48,20 +61,23 @@ public class RegularHiScoreInteractor
                 {
                     case ActivityStatus activityStatus:
                     {
-                        CreateActivity(activityStatus, currentActivities, user, lastUpdated);
+                        CreateActivity(activityStatus, currentActivities, user.value, lastUpdated);
                         break;
                     }
                     case SkillStatus skillStatus:
                     {
-                        CreateSkill(skillStatus, currentSkills, user, lastUpdated);
+                        CreateSkill(skillStatus, currentSkills, user.value, lastUpdated);
                         break;
                     }
                 }
             }
 
-            session.Setting["Name"] = user.Name;
+            session.Setting["Name"] = user.value.Name;
             _db.CurrentSession.Update(session);
             await _db.SaveChangesAsync(CancellationToken.None);
+
+            Console.WriteLine("{0,7}/{1} - User: {2,12} - Rank: {3,12} - Saved", 
+                user.i, count, statOverview.Player.Name, statOverview.Overall.Rank);
         }
 
         session.Active = false;
