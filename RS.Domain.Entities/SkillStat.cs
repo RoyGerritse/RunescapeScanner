@@ -10,4 +10,8 @@ public class SkillStat
     public long Experience { get; set; }
     public long Rank { get; set; }
     public DateTime LastUpdated { get; set; }
+    
+    public virtual Guid PlayerId { get; set; }
+    public virtual Guid GameVersionId { get; set; }
+    public virtual Guid SkillId { get; set; }
 }

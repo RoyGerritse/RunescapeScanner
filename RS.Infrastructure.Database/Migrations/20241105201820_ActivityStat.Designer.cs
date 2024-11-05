@@ -3,18 +3,21 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Scanner.Infrastructure.Database;
 
 #nullable disable
 
-namespace Scanner.Migrations
+namespace Scanner.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(RunescapeContext))]
-    partial class RunescapeContextModelSnapshot : ModelSnapshot
+    [Migration("20241105201820_ActivityStat")]
+    partial class ActivityStat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -2,21 +2,25 @@
 
 namespace Scanner.Infrastructure.HiScoreClient.Models;
 
-public class SkillStat : IStat
+public class SkillStatus : IStatus
 {
-    public SkillStat() 
+    public SkillStatus(HiScoreIndex.Skill skill) 
     {
         Rank = 0;
         Level = 0;
         Experience = 0;
+        Skill = skill;
     }
-    public SkillStat(string[] records)
+    
+    public SkillStatus(string[] records, HiScoreIndex.Skill skill)
     {
         Rank = long.Parse(records[0]);;
         Level = int.Parse(records[1]);
         Experience = long.Parse(records[2]);
+        Skill = skill;
     }
 
+    public HiScoreIndex.Skill Skill { get; set; }
     public long Rank { get; set; }
     public int Level { get; set; }
     public long Experience { get; set; }

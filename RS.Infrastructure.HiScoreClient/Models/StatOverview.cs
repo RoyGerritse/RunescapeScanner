@@ -1,11 +1,12 @@
-﻿using Scanner.Domain.Entities;
+﻿using System.Collections.Immutable;
+using Scanner.Domain.Entities;
 using Scanner.Infrastructure.HiScoreClient.Interface;
 
 namespace Scanner.Infrastructure.HiScoreClient.Models;
 
 public class StatOverview
 {
-    private readonly Dictionary<int, IStat> _statsDictionary = new();
+    private readonly Dictionary<int, IStatus> _statsDictionary = new();
 
     public StatOverview(Player player, string content)
     {
@@ -17,76 +18,79 @@ public class StatOverview
             if (split.Length == 0 || split[0] == string.Empty) continue;
             if (line.i < 30)
             {
-                _statsDictionary.Add(line.i, split[0] != "-1" ? new SkillStat(split) : new SkillStat());
+                var skill = (HiScoreIndex.Skill)line.i;
+                _statsDictionary.Add(line.i, split[0] != "-1" ? new SkillStatus(split, skill) : new SkillStatus(skill));
             }
             else
             {
-                _statsDictionary.Add(line.i, split[0] != "-1" ? new ActivityStat(split) : new ActivityStat());
+                var activity = (HiScoreIndex.Activity)line.i;
+                _statsDictionary.Add(line.i, split[0] != "-1" ? new ActivityStatus(split, activity) : new ActivityStatus(activity));
             }
         }
     }
 
-    private IList<IStat> Stats => _statsDictionary.Select(a => a.Value).ToList();
+    public ImmutableArray<IStatus> Stats => [.._statsDictionary.Select(a => a.Value)];
     public Player Player { get; set; }
-    public SkillStat Overall => (SkillStat)Stats[0];
-    public SkillStat Attack => (SkillStat)Stats[1];
-    public SkillStat Defence => (SkillStat)Stats[2];
-    public SkillStat Strength => (SkillStat)Stats[3];
-    public SkillStat Constitution => (SkillStat)Stats[4];
-    public SkillStat Ranged => (SkillStat)Stats[5];
-    public SkillStat Prayer => (SkillStat)Stats[6];
-    public SkillStat Magic => (SkillStat)Stats[7];
-    public SkillStat Cooking => (SkillStat)Stats[8];
-    public SkillStat Woodcutting => (SkillStat)Stats[9];
-    public SkillStat Fletching => (SkillStat)Stats[10];
-    public SkillStat Fishing => (SkillStat)Stats[11];
-    public SkillStat Firemaking => (SkillStat)Stats[12];
-    public SkillStat Crafting => (SkillStat)Stats[13];
-    public SkillStat Smithing => (SkillStat)Stats[14];
-    public SkillStat Mining => (SkillStat)Stats[15];
-    public SkillStat Herblore => (SkillStat)Stats[16];
-    public SkillStat Agility => (SkillStat)Stats[17];
-    public SkillStat Thieving => (SkillStat)Stats[18];
-    public SkillStat Slayer => (SkillStat)Stats[19];
-    public SkillStat Farming => (SkillStat)Stats[20];
-    public SkillStat Runecrafting => (SkillStat)Stats[21];
-    public SkillStat Hunter => (SkillStat)Stats[22];
-    public SkillStat Construction => (SkillStat)Stats[23];
-    public SkillStat Summoning => (SkillStat)Stats[24];
-    public SkillStat Dungeoneering => (SkillStat)Stats[25];
-    public SkillStat Divination => (SkillStat)Stats[26];
-    public SkillStat Invention => (SkillStat)Stats[27];
-    public SkillStat Archaeology => (SkillStat)Stats[28];
-    public SkillStat Necromancy => (SkillStat)Stats[29];
     
-    public ActivityStat BountyHunter => (ActivityStat)Stats[30];
-    public ActivityStat BhRogues => (ActivityStat)Stats[31];
-    public ActivityStat DominionTower => (ActivityStat)Stats[32];
-    public ActivityStat TheCrucible => (ActivityStat)Stats[33];
-    public ActivityStat CastleWarsgames => (ActivityStat)Stats[34];
-    public ActivityStat BaAttackers => (ActivityStat)Stats[35];
-    public ActivityStat BaDefenders => (ActivityStat)Stats[36];
-    public ActivityStat BaCollectors => (ActivityStat)Stats[37];
-    public ActivityStat BaHealers => (ActivityStat)Stats[38];
-    public ActivityStat DuelTournament => (ActivityStat)Stats[39];
-    public ActivityStat MobilisingArmies => (ActivityStat)Stats[40];
-    public ActivityStat Conquest => (ActivityStat)Stats[41];
-    public ActivityStat FistOfGuthix => (ActivityStat)Stats[42];
-    public ActivityStat GgAthletics => (ActivityStat)Stats[43];
-    public ActivityStat GgResourceRace => (ActivityStat)Stats[44];
-    public ActivityStat WeArmadylLifetimeContribution => (ActivityStat)Stats[45];
-    public ActivityStat WeBandosLifetimeContribution => (ActivityStat)Stats[46];
-    public ActivityStat WeArmadylPvPkills => (ActivityStat)Stats[47];
-    public ActivityStat WeBandosPvPkills => (ActivityStat)Stats[48];
-    public ActivityStat HeistGuardLevel => (ActivityStat)Stats[49];
-    public ActivityStat HeistRobberLevel => (ActivityStat)Stats[50];
-    public ActivityStat Fp5GameAverage => (ActivityStat)Stats[51];
-    public ActivityStat Af15CowTipping => (ActivityStat)Stats[52];
-    public ActivityStat RatsKilledAfterTheMiniquest => (ActivityStat)Stats[53];
-    public ActivityStat RuneScore => (ActivityStat)Stats[54];
-    public ActivityStat ClueScrollsEasy => (ActivityStat)Stats[55];
-    public ActivityStat ClueScrollsMedium => (ActivityStat)Stats[56];
-    public ActivityStat ClueScrollsHard => (ActivityStat)Stats[57];
-    public ActivityStat ClueScrollsElite => (ActivityStat)Stats[58];
-    public ActivityStat ClueScrollsMaster => (ActivityStat)Stats[59];
+    public SkillStatus Overall => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Overall];
+    public SkillStatus Attack => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Attack];
+    public SkillStatus Defence => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Defence];
+    public SkillStatus Strength => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Strength];
+    public SkillStatus Constitution => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Constitution];
+    public SkillStatus Ranged => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Ranged];
+    public SkillStatus Prayer => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Prayer];
+    public SkillStatus Magic => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Magic];
+    public SkillStatus Cooking => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Cooking];
+    public SkillStatus Woodcutting => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Woodcutting];
+    public SkillStatus Fletching => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Fletching];
+    public SkillStatus Fishing => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Fishing];
+    public SkillStatus Firemaking => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Firemaking];
+    public SkillStatus Crafting => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Crafting];
+    public SkillStatus Smithing => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Smithing];
+    public SkillStatus Mining => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Mining];
+    public SkillStatus Herblore => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Herblore];
+    public SkillStatus Agility => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Agility];
+    public SkillStatus Thieving => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Thieving];
+    public SkillStatus Slayer => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Slayer];
+    public SkillStatus Farming => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Farming];
+    public SkillStatus Runecrafting => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Runecrafting];
+    public SkillStatus Hunter => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Hunter];
+    public SkillStatus Construction => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Constitution];
+    public SkillStatus Summoning => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Summoning];
+    public SkillStatus Dungeoneering => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Dungeoneering];
+    public SkillStatus Divination => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Divination];
+    public SkillStatus Invention => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Invention];
+    public SkillStatus Archaeology => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Archaeology];
+    public SkillStatus Necromancy => (SkillStatus)Stats[(int)HiScoreIndex.Skill.Necromancy];
+    
+    public ActivityStatus BountyHunter => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.BountyHunter];
+    public ActivityStatus BhRogues => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.BhRogues];
+    public ActivityStatus DominionTower => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.DominionTower];
+    public ActivityStatus TheCrucible => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.TheCrucible];
+    public ActivityStatus CastleWarsGames => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.CastleWarsGames];
+    public ActivityStatus BaAttackers => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.BaAttackers];
+    public ActivityStatus BaDefenders => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.BaDefenders];
+    public ActivityStatus BaCollectors => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.BaCollectors];
+    public ActivityStatus BaHealers => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.BaHealers];
+    public ActivityStatus DuelTournament => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.DuelTournament];
+    public ActivityStatus MobilisingArmies => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.MobilisingArmies];
+    public ActivityStatus Conquest => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.Conquest];
+    public ActivityStatus FistOfGuthix => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.FistOfGuthix];
+    public ActivityStatus GgAthletics => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.GgAthletics];
+    public ActivityStatus GgResourceRace => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.GgResourceRace];
+    public ActivityStatus WeArmadylLifetimeContribution => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.WeArmadylLifetimeContribution];
+    public ActivityStatus WeBandosLifetimeContribution => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.WeBandosLifetimeContribution];
+    public ActivityStatus WeArmadylPvPkills => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.WeArmadylPvPkills];
+    public ActivityStatus WeBandosPvPkills => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.WeBandosPvPkills];
+    public ActivityStatus HeistGuardLevel => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.HeistGuardLevel];
+    public ActivityStatus HeistRobberLevel => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.HeistRobberLevel];
+    public ActivityStatus Fp5GameAverage => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.Fp5GameAverage];
+    public ActivityStatus Af15CowTipping => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.Af15CowTipping];
+    public ActivityStatus RatsKilledAfterTheMiniquest => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.RatsKilledAfterTheMiniquest];
+    public ActivityStatus RuneScore => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.RuneScore];
+    public ActivityStatus ClueScrollsEasy => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.ClueScrollsEasy];
+    public ActivityStatus ClueScrollsMedium => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.ClueScrollsMedium];
+    public ActivityStatus ClueScrollsHard => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.ClueScrollsHard];
+    public ActivityStatus ClueScrollsElite => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.ClueScrollsElite];
+    public ActivityStatus ClueScrollsMaster => (ActivityStatus)Stats[(int)HiScoreIndex.Activity.ClueScrollsMaster];
 }
