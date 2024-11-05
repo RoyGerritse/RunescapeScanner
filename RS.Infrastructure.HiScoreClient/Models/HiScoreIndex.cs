@@ -67,7 +67,6 @@ public static class HiScoreIndex
         ClueScrollsMedium = 56,
         ClueScrollsHard = 57,
         ClueScrollsElite = 58,
-        ClueScrollsMaster = 49
-}
-
+        ClueScrollsMaster = 59
+    }
 }
